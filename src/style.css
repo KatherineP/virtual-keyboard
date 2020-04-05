@@ -1,0 +1,70 @@
+.wrapper {
+    max-width: 681px;
+    margin: 0 auto;
+    border: 2px solid black;
+}
+
+.btn {
+    border-radius: 3px;
+    cursor: pointer;
+    user-select: none;
+    transition: border-radius 0.3s, background-color 0.3s;
+    text-align: center;
+    color: #ffffff;
+    line-height: 40px;
+    text-align: center;
+    float: left;
+}
+
+
+.button {
+    width: 40px;
+    height: 40px;
+    background: #444444;
+    font-weight: 500;
+}
+
+.gap-button {
+    width: 267px;
+    height: 40px;
+    background-color: #444444;
+}
+
+.backspace-button {
+    width: 86px;
+    height: 40px;
+    background-color: #222222;
+    font-weight: 600;
+}
+
+.arrow-button {
+    width: 40px;
+    height: 40px;
+    background-color: #222222;
+    font-weight: 600;
+}
+
+
+div {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin: 3px 2.5px;
+
+}
+
+.text-area {
+    width: 698px;
+    height: 246px;
+    margin: 3px;
+    font-size: 20px;
+    padding: 6px;
+}
+
+.mouse-hover {
+    background-color: salmon;
+}
+
+.hidden {
+    display: none;
+}
