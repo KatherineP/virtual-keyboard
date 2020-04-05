@@ -116,6 +116,7 @@ document.querySelector('.wrapper').addEventListener('click', (event) => {
   const elButton = event.target.closest('.button');
   const gapBtn = event.target.classList.contains('gap-button');
   const backspaceBtn = event.target.closest('.backspace-button');
+  const arrowButton = event.target.closest('.arrow-button');
 
   if (elButton) {
     if (elButton.firstElementChild.style.textTransform === 'capitalize') {
@@ -133,17 +134,37 @@ document.querySelector('.wrapper').addEventListener('click', (event) => {
     handleCapsLock(13, 23);
     handleCapsLock(26, 37);
     handleCapsLock(37, 44);
+  } else if (backspaceBtn && (backspaceBtn.firstElementChild.innerHTML === tabButton)) {
+    textArea.value += '    ';
+  }
+   else if (arrowButton) {
+    if(arrowButton.firstElementChild.innerText === "←") {
+      textArea.value += arrowButton.firstElementChild.innerText;
+  } else if (arrowButton.firstElementChild.innerText === "↓") {
+      textArea.value += arrowButton.firstElementChild.innerText;
+  } else if (arrowButton.firstElementChild.innerText === "→") {
+    textArea.value += arrowButton.firstElementChild.innerText;
+  } else if (arrowButton.firstElementChild.innerText === "↑") {
+    textArea.value += arrowButton.firstElementChild.innerText;
+  }
   }
 });
 
 document.addEventListener('keydown', (event) => {
-  textArea.value += event.key;
+
   document.querySelectorAll('.btn').forEach((el) => {
     if (el.firstElementChild.innerHTML === event.key) {
       el.style.backgroundColor = 'pink';
       el.style.borderRadius = '20px';
-    }
+      textArea.value += event.key;
+    } 
   });
+
+  if (event.keyCode === 8) {
+    Array.from(document.querySelectorAll('.btn'))[13].style.backgroundColor = 'pink';
+    Array.from(document.querySelectorAll('.btn'))[13].style.borderRadius = '20px';
+    textArea.value = textArea.value.slice(0, -1);
+  }
 });
 
 document.addEventListener('keyup', (event) => {
@@ -151,6 +172,10 @@ document.addEventListener('keyup', (event) => {
     if (el.firstElementChild.innerHTML === event.key) {
       el.style.backgroundColor = '';
       el.style.borderRadius = '';
+    } else if (event.keyCode === 8) {
+      Array.from(document.querySelectorAll('.btn'))[13].style.backgroundColor = '';
+      Array.from(document.querySelectorAll('.btn'))[13].style.borderRadius = '';
     }
+
   });
 });
