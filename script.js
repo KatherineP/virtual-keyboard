@@ -36,6 +36,7 @@ document.body.append(div);
 const textArea = document.createElement('textarea');
 textArea.className = 'text-area';
 document.querySelector('.wrapper').append(textArea);
+textArea.setAttribute('placeholder', 'to use Caps lock - click on it 2 times (known bug) \n use command+space for changing language (not done)');
 
 // first row english
 firstRow.forEach((element) => {
