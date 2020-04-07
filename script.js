@@ -91,6 +91,7 @@ document.querySelector('.wrapper').addEventListener('mouseout', (event) => {
   el.style.backgroundColor = '';
 });
 
+// animation for mouse click event
 const setTimer = (element) => {
   element.style.borderRadius = '20px';
   return setTimeout(() => element.style.borderRadius = '', 500);
