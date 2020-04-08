@@ -3,9 +3,12 @@ const firstRow = ['`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=
 const secondRow = ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\\'];
 const thirdRow = ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', '\''];
 const fourthRow = ['z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/'];
-// const secondRowRus = ['й', 'ц', 'у', 'к', 'е', 'н', 'г', 'ш', 'щ', 'з', 'х', 'ъ', 'ё'];
-// const thirdRowRus = ['ф', 'ы', 'в', 'а', 'п', 'р', 'о', 'л', 'д', 'ж', 'э'];
-// const fourthRowRus = ['я', 'ч', 'с', 'м', 'и', 'т', 'ь', 'б', 'ю', '/'];
+const emptyRow1 = Array(13).fill('');
+const emptyRow2 = Array(11).fill('');
+const emptyRow3 = Array(10).fill('');
+const secondRowRus = ['й', 'ц', 'у', 'к', 'е', 'н', 'г', 'ш', 'щ', 'з', 'х', 'ъ', 'ё'];
+const thirdRowRus = ['ф', 'ы', 'в', 'а', 'п', 'р', 'о', 'л', 'д', 'ж', 'э'];
+const fourthRowRus = ['я', 'ч', 'с', 'м', 'и', 'т', 'ь', 'б', 'ю', '/'];
 const deleteButton = 'delete';
 const tabButton = 'tab';
 const capsButton = 'caps lock';
@@ -18,6 +21,8 @@ const topArrowButton = '&uarr;';
 const bottomArrowButton = '&darr;';
 const rightArrowButton = '&rarr;';
 const leftArrowButton = '&larr;';
+const language = 'language';
+let textArea;
 
 const createNewDiv = (className, btnClassName, element) => {
   const div = document.createElement('div');
@@ -27,54 +32,90 @@ const createNewDiv = (className, btnClassName, element) => {
   return document.querySelector('.wrapper').append(div);
 };
 
-// wrapper
-const div = document.createElement('div');
-div.className = 'wrapper';
-document.body.append(div);
+const createKeyboard = () => {
+  // wrapper
+  const div = document.createElement('div');
+  div.className = 'wrapper';
+  document.body.append(div);
 
-// text area
-const textArea = document.createElement('textarea');
-textArea.className = 'text-area';
-document.querySelector('.wrapper').append(textArea);
-textArea.setAttribute('placeholder', 'to use Caps lock - click on it 2 times (known bug) \n use command+space for changing language (not done)');
+  // text area
+  textArea = document.createElement('textarea');
+  textArea.className = 'text-area';
+  document.querySelector('.wrapper').append(textArea);
+  textArea.setAttribute('placeholder', 'to use Caps lock - click on it 2 times (known bug) \n use command+control for changing language');
+  // first row english
+  firstRow.forEach((element) => {
+    createNewDiv('button', 'btn', element);
+  });
+  createNewDiv('backspace-button', 'btn', deleteButton);
 
-// first row english
-firstRow.forEach((element) => {
-  createNewDiv('button', 'btn', element);
+  // second row english
+  createNewDiv('backspace-button', 'btn', tabButton);
+  emptyRow1.forEach((element) => {
+    createNewDiv('button', 'btn', element);
+  });
+
+  // third row english
+  createNewDiv('backspace-button', 'btn', capsButton);
+  emptyRow2.forEach((element) => {
+    createNewDiv('button', 'btn', element);
+  });
+  createNewDiv('backspace-button', 'btn', returnButton);
+
+  // fourth row english
+  createNewDiv('backspace-button', 'btn', shiftButton);
+  emptyRow3.forEach((element) => {
+    createNewDiv('button', 'btn', element);
+  });
+  createNewDiv('arrow-button', 'btn', topArrowButton);
+  createNewDiv('backspace-button', 'btn', shiftButton);
+
+  // fifth row english
+  createNewDiv('arrow-button', 'btn', ctrlButton);
+  createNewDiv('arrow-button', 'btn', altButton);
+  createNewDiv('backspace-button', 'btn', commandButton);
+  createNewDiv('gap-button', 'btn', '');
+  createNewDiv('arrow-button', 'btn', altButton);
+  createNewDiv('arrow-button', 'btn', leftArrowButton);
+  createNewDiv('arrow-button', 'btn', bottomArrowButton);
+  createNewDiv('arrow-button', 'btn', rightArrowButton);
+  createNewDiv('arrow-button', 'btn', ctrlButton);
+};
+
+const setLetters = (row1, row2, row3) => {
+  let j = 0;
+  let a = 0;
+  let b = 0;
+  for (let i = 13; i < 26; i += 1) {
+    Array.from(document.querySelectorAll('.button'))[i].firstElementChild.textContent = row1[j];
+    j += 1;
+  }
+  for (let i = 26; i < 37; i += 1) {
+    Array.from(document.querySelectorAll('.button'))[i].firstElementChild.textContent = row2[a];
+    a += 1;
+  }
+  for (let i = 37; i < 47; i += 1) {
+    Array.from(document.querySelectorAll('.button'))[i].firstElementChild.textContent = row3[b];
+    b += 1;
+  }
+};
+
+createKeyboard();
+
+document.addEventListener('DOMContentLoaded', () => {
+  const lang = localStorage.getItem(language);
+  if (lang === 'english') {
+    console.log(lang + ' >>> lang');
+    setLetters(secondRow, thirdRow, fourthRow);
+  } else if (lang === 'russian') {
+    console.log(lang + ' >>> lang');
+    setLetters(secondRowRus, thirdRowRus, fourthRowRus);
+  } else {
+    setLetters(secondRow, thirdRow, fourthRow);
+  }
 });
-createNewDiv('backspace-button', 'btn', deleteButton);
 
-// second row english
-createNewDiv('backspace-button', 'btn', tabButton);
-secondRow.forEach((element) => {
-  createNewDiv('button', 'btn', element);
-});
-
-// third row english
-createNewDiv('backspace-button', 'btn', capsButton);
-thirdRow.forEach((element) => {
-  createNewDiv('button', 'btn', element);
-});
-createNewDiv('backspace-button', 'btn', returnButton);
-
-// fourth row english
-createNewDiv('backspace-button', 'btn', shiftButton);
-fourthRow.forEach((element) => {
-  createNewDiv('button', 'btn', element);
-});
-createNewDiv('arrow-button', 'btn', topArrowButton);
-createNewDiv('backspace-button', 'btn', shiftButton);
-
-// fifth row english
-createNewDiv('arrow-button', 'btn', ctrlButton);
-createNewDiv('arrow-button', 'btn', altButton);
-createNewDiv('backspace-button', 'btn', commandButton);
-createNewDiv('gap-button', 'btn', '');
-createNewDiv('arrow-button', 'btn', altButton);
-createNewDiv('arrow-button', 'btn', leftArrowButton);
-createNewDiv('arrow-button', 'btn', bottomArrowButton);
-createNewDiv('arrow-button', 'btn', rightArrowButton);
-createNewDiv('arrow-button', 'btn', ctrlButton);
+setLetters(secondRow, thirdRow, fourthRow);
 
 document.querySelector('.wrapper').addEventListener('mouseover', (event) => {
   const el = event.target.closest('.btn');
@@ -131,9 +172,9 @@ document.querySelector('.wrapper').addEventListener('click', (event) => {
   } else if (backspaceBtn && (backspaceBtn.firstElementChild.innerHTML === returnButton)) {
     textArea.value += '\n';
   } else if (backspaceBtn && (backspaceBtn.firstElementChild.innerHTML === capsButton)) {
-    handleCapsLock(13, 23);
+    handleCapsLock(13, 26);
     handleCapsLock(26, 37);
-    handleCapsLock(37, 44);
+    handleCapsLock(37, 46);
   } else if (backspaceBtn && (backspaceBtn.firstElementChild.innerHTML === tabButton)) {
     textArea.value += '    ';
   } else if (arrowButton) {
@@ -154,16 +195,42 @@ const animationForSpecialBtns = (arrayElem) => {
   Array.from(document.querySelectorAll('.btn'))[arrayElem].style.borderRadius = '20px';
 };
 
+let flag = false;
+
 document.addEventListener('keydown', (event) => {
+  // change language
+  if (event.metaKey) {
+    flag = true;
+  }
+  if (event.ctrlKey && flag) {
+    flag = false;
+    if (Array.from(document.querySelectorAll('.button'))[13].firstElementChild.textContent === 'q') {
+      setLetters(secondRowRus, thirdRowRus, fourthRowRus);
+      localStorage.setItem(language, 'russian');
+    } else {
+      setLetters(secondRow, thirdRow, fourthRow);
+      localStorage.setItem(language, 'english');
+    }
+  }
   document.querySelectorAll('.btn').forEach((el) => {
-    if (el.firstElementChild.innerHTML === event.key && el.firstElementChild.style.textTransform === 'capitalize') {
+    console.log('зашли1');
+    if (el.firstElementChild.textContent === event.key && el.firstElementChild.style.textTransform === 'capitalize') {
       el.style.backgroundColor = 'pink';
       el.style.borderRadius = '20px';
-      textArea.value += event.code.substr(-1);
-    } else if (el.firstElementChild.innerHTML === event.key) {
+      if (Array.from(document.querySelectorAll('.button'))[13].firstElementChild.textContent === 'q') {
+        textArea.value += event.code.substr(-1);
+      } else {
+        textArea.value += event.key.toUpperCase();
+      }
+    } else if (el.firstElementChild.textContent === event.key) {
+      console.log('зашли2');
       el.style.backgroundColor = 'pink';
       el.style.borderRadius = '20px';
-      textArea.value += event.key;
+      if (Array.from(document.querySelectorAll('.button'))[13].firstElementChild.textContent === 'q') {
+        textArea.value += event.key;
+      } else {
+        textArea.value += event.key;
+      }
     }
   });
 
