@@ -42,7 +42,7 @@ const createKeyboard = () => {
   textArea = document.createElement('textarea');
   textArea.className = 'text-area';
   document.querySelector('.wrapper').append(textArea);
-  textArea.setAttribute('placeholder', 'to use Caps lock - click on it 2 times (known bug) \n use command+control for changing language');
+  textArea.setAttribute('placeholder', 'to use Caps lock - click on it 2 times (known bug) \n use command(left)+control(left) for changing language');
   // first row english
   firstRow.forEach((element) => {
     createNewDiv('button', 'btn', element);
